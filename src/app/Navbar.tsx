@@ -42,9 +42,16 @@ export default function Navbar() {
           >
             Eligibility matcher
           </Link>
-          <span className="h-full flex items-center text-[14px] font-medium text-gray-400 border-b-2 border-transparent cursor-default">
+          <Link
+            href="/explorer"
+            className={`h-full flex items-center text-[14px] font-medium border-b-2 transition-colors ${
+              pathname === "/explorer"
+                ? "text-[#2b5a3f] border-[#2b5a3f]"
+                : "text-gray-400 border-transparent hover:text-gray-600"
+            }`}
+          >
             Scheme explorer
-          </span>
+          </Link>
         </div>
       )}
 
