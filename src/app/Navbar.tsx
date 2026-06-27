@@ -32,9 +32,16 @@ export default function Navbar() {
           >
             Simplifier
           </Link>
-          <span className="h-full flex items-center text-[14px] font-medium text-gray-400 border-b-2 border-transparent cursor-default">
+          <Link
+            href="/matcher"
+            className={`h-full flex items-center text-[14px] font-medium border-b-2 transition-colors ${
+              pathname === "/matcher"
+                ? "text-[#2b5a3f] border-[#2b5a3f]"
+                : "text-gray-400 border-transparent hover:text-gray-600"
+            }`}
+          >
             Eligibility matcher
-          </span>
+          </Link>
           <span className="h-full flex items-center text-[14px] font-medium text-gray-400 border-b-2 border-transparent cursor-default">
             Scheme explorer
           </span>

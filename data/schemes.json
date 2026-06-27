@@ -1,0 +1,254 @@
+[
+  {
+    "id": "pm-kisan",
+    "name": "PM Kisan Samman Nidhi",
+    "category": "farmer",
+    "description": "Provides ₹6,000 per year in three equal instalments directly to small and marginal farmers. No application fee, transferred directly to bank account.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": ["farmer"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Bank Passbook", "Land ownership documents"]
+  },
+  {
+    "id": "nsp-merit-scholarship",
+    "name": "National Scholarship Portal — Merit Scholarship",
+    "category": "student",
+    "description": "Financial support of up to ₹12,000 per year for students from low-income families pursuing higher education at any UGC-recognised institution.",
+    "eligibility": {
+      "minAge": 16,
+      "maxAge": 30,
+      "maxIncome": 250000,
+      "occupation": ["student"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Income Certificate", "Marksheets (last two years)", "College Admission Letter", "Bank Passbook"]
+  },
+  {
+    "id": "nsp-sc-scholarship",
+    "name": "National Scholarship Portal — SC Post-Matric Scholarship",
+    "category": "student",
+    "description": "Scholarship for Scheduled Caste students pursuing post-matriculation education. Covers tuition fees and provides a maintenance allowance.",
+    "eligibility": {
+      "minAge": 16,
+      "maxAge": 35,
+      "maxIncome": 250000,
+      "occupation": ["student"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Caste Certificate", "Income Certificate", "Marksheets", "Bank Passbook"]
+  },
+  {
+    "id": "ignoaps",
+    "name": "Indira Gandhi National Old Age Pension Scheme (IGNOAPS)",
+    "category": "senior_citizen",
+    "description": "Monthly pension of ₹200–₹500 for senior citizens living below the poverty line. No contribution required — it is a government-funded scheme.",
+    "eligibility": {
+      "minAge": 60,
+      "maxAge": null,
+      "maxIncome": 100000,
+      "occupation": ["any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Age Proof (Birth Certificate / School Certificate)", "BPL Ration Card", "Bank Passbook"]
+  },
+  {
+    "id": "pmvvy",
+    "name": "Pradhan Mantri Vaya Vandana Yojana (PMVVY)",
+    "category": "senior_citizen",
+    "description": "A pension scheme for senior citizens guaranteeing 7.4% annual return on a lump-sum investment, with monthly pension payouts for 10 years.",
+    "eligibility": {
+      "minAge": 60,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": ["any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "PAN Card", "Bank Passbook", "Age Proof"]
+  },
+  {
+    "id": "pmjdy",
+    "name": "Pradhan Mantri Jan Dhan Yojana (PMJDY)",
+    "category": "general",
+    "description": "Zero-balance savings account with a free RuPay debit card, accident insurance of ₹2 lakh, and life cover of ₹30,000 for any Indian citizen.",
+    "eligibility": {
+      "minAge": 10,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": ["any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Passport-size photograph"]
+  },
+  {
+    "id": "pmay-gramin",
+    "name": "Pradhan Mantri Awas Yojana — Gramin (PMAY-G)",
+    "category": "general",
+    "description": "Financial assistance of ₹1.2–₹1.3 lakh for rural households to build or upgrade a pucca house. Funds are transferred directly to the bank account.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": 200000,
+      "occupation": ["any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "BPL Ration Card", "Bank Passbook", "Land document or NOC"]
+  },
+  {
+    "id": "sukanya-samriddhi",
+    "name": "Sukanya Samriddhi Yojana",
+    "category": "women",
+    "description": "A high-interest (8.2% p.a.) savings scheme for the girl child. Parents deposit yearly and the account matures when the girl turns 21, ideal for education or marriage expenses.",
+    "eligibility": {
+      "minAge": 0,
+      "maxAge": 10,
+      "maxIncome": null,
+      "occupation": ["any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Girl child's Birth Certificate", "Parent's Aadhaar Card", "PAN Card", "Bank Passbook"]
+  },
+  {
+    "id": "beti-bachao",
+    "name": "Beti Bachao Beti Padhao",
+    "category": "women",
+    "description": "A scheme promoting welfare, education, and survival of the girl child. Provides financial incentives and awareness support to families in identified districts.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": 18,
+      "maxIncome": 300000,
+      "occupation": ["student", "any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Birth Certificate", "Aadhaar Card", "Income Certificate"]
+  },
+  {
+    "id": "ayushman-bharat",
+    "name": "Ayushman Bharat — Pradhan Mantri Jan Arogya Yojana",
+    "category": "healthcare",
+    "description": "Health insurance cover of up to ₹5 lakh per family per year for hospitalisation at empanelled public and private hospitals across India.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": 200000,
+      "occupation": ["any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Ration Card", "Income Certificate (if applicable)"]
+  },
+  {
+    "id": "pm-suraksha-bima",
+    "name": "Pradhan Mantri Suraksha Bima Yojana (PMSBY)",
+    "category": "general",
+    "description": "Accident insurance cover of ₹2 lakh for accidental death or total disability at just ₹20 per year premium, available to all bank account holders.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": 70,
+      "maxIncome": null,
+      "occupation": ["any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Bank Passbook", "Mobile number linked to bank account"]
+  },
+  {
+    "id": "tnpsc-scheme",
+    "name": "Tamil Nadu State Scholarship for Higher Education",
+    "category": "student",
+    "description": "A Tamil Nadu state government grant supporting tuition costs for undergraduate students from economically weaker sections in state colleges.",
+    "eligibility": {
+      "minAge": 17,
+      "maxAge": 28,
+      "maxIncome": 200000,
+      "occupation": ["student"],
+      "states": ["Tamil Nadu"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Income Certificate", "10th/12th Marksheets", "Community Certificate", "College ID"]
+  },
+  {
+    "id": "kisan-credit-card",
+    "name": "Kisan Credit Card (KCC)",
+    "category": "farmer",
+    "description": "Provides farmers with timely and adequate credit for agricultural needs at low interest rates (around 4% p.a.), covering crop loans, post-harvest expenses, and more.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": 75,
+      "maxIncome": null,
+      "occupation": ["farmer"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "PAN Card", "Land records", "Bank Passbook", "Passport-size photograph"]
+  },
+  {
+    "id": "pm-jeevan-jyoti",
+    "name": "Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY)",
+    "category": "general",
+    "description": "Life insurance cover of ₹2 lakh in case of death for any reason, at a premium of just ₹436 per year. Available to all savings bank account holders aged 18–50.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": 50,
+      "maxIncome": null,
+      "occupation": ["any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Bank Passbook", "Mobile number linked to bank account"]
+  },
+  {
+    "id": "nrlm-self-help",
+    "name": "Deendayal Antyodaya Yojana — National Rural Livelihoods Mission (DAY-NRLM)",
+    "category": "women",
+    "description": "Supports rural women by forming Self-Help Groups (SHGs), providing micro-credit, skill training, and linkage to financial institutions for income generation.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": 150000,
+      "occupation": ["unemployed", "any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "BPL Card (if applicable)", "Bank Passbook", "Residence Proof"]
+  },
+  {
+    "id": "pmegp",
+    "name": "PM Employment Generation Programme (PMEGP)",
+    "category": "general",
+    "description": "Provides financial assistance (15–35% subsidy on project cost) to individuals setting up micro-enterprises, creating self-employment opportunities in rural and urban areas.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": ["unemployed", "any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "PAN Card", "Project Report", "8th Pass Certificate (minimum)", "Bank Passbook"]
+  },
+  {
+    "id": "annapurna-scheme",
+    "name": "Annapurna Scheme (Senior Citizen Food Security)",
+    "category": "senior_citizen",
+    "description": "Provides 10 kg of free food grain per month to senior citizens who are not covered under the National Old Age Pension Scheme.",
+    "eligibility": {
+      "minAge": 65,
+      "maxAge": null,
+      "maxIncome": 100000,
+      "occupation": ["any"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Age Proof", "Income Certificate", "Proof of non-receipt of NOAPS pension"]
+  },
+  {
+    "id": "fasal-bima",
+    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "category": "farmer",
+    "description": "Crop insurance scheme that compensates farmers for financial losses due to natural calamities, pests, or diseases. Farmers pay only 1.5–5% of the sum insured as premium.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": ["farmer"],
+      "states": ["all"]
+    },
+    "documentsNeeded": ["Aadhaar Card", "Land records / Khasra Khatauni", "Bank Passbook", "Sowing Certificate"]
+  }
+]

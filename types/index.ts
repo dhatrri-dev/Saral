@@ -14,3 +14,23 @@ export interface ExampleDocument {
   subtitle: string;
   text: string;
 }
+
+export interface Scheme {
+  id: string;
+  name: string;
+  category: "student" | "farmer" | "senior_citizen" | "women" | "healthcare" | "general";
+  description: string;
+  eligibility: {
+    minAge: number | null;
+    maxAge: number | null;
+    maxIncome: number | null;
+    occupation: string[] | null;
+    states: string[];
+  };
+  documentsNeeded: string[];
+}
+
+export interface MatchedScheme extends Scheme {
+  reason: string;
+  relevanceScore: number;
+}
