@@ -11,9 +11,25 @@ export default function ResultPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  // Build the fetch body from whatever was stored in sessionStorage
+  const buildFetchBody = (): object | null => {
     const text = sessionStorage.getItem("saral_document_text");
-    if (!text) {
+    if (text) return { type: "text", text };
+
+    const payloadStr = sessionStorage.getItem("saral_document_payload");
+    if (payloadStr) {
+      try {
+        return JSON.parse(payloadStr);
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    const body = buildFetchBody();
+    if (!body) {
       setLoading(false);
       setError("No document found. Please go back and paste a document first.");
       return;
@@ -24,7 +40,7 @@ export default function ResultPage() {
         const response = await fetch("/api/simplify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text }),
+          body: JSON.stringify(body),
         });
 
         const data = await response.json();
@@ -43,6 +59,7 @@ export default function ResultPage() {
     };
 
     fetchResult();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRetry = () => {
@@ -50,8 +67,8 @@ export default function ResultPage() {
     setLoading(true);
     setResult(null);
 
-    const text = sessionStorage.getItem("saral_document_text");
-    if (!text) {
+    const body = buildFetchBody();
+    if (!body) {
       setError("No document found. Please go back and paste a document first.");
       setLoading(false);
       return;
@@ -60,7 +77,7 @@ export default function ResultPage() {
     fetch("/api/simplify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
+      body: JSON.stringify(body),
     })
       .then(async (response) => {
         const data = await response.json();
