@@ -1,137 +1,145 @@
 import { NextResponse } from "next/server";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import type { SimplifyResult } from "@root/types/index";
 
+// ─── Demo Mode (only active when DEMO_MODE=true env var is set) ───────────────
+const DEMO_MODE = process.env.DEMO_MODE === "true";
+
+function isRetryable(error: any): boolean {
+  const msg = error?.message || "";
+  return (
+    msg.includes("429") ||
+    msg.includes("503") ||
+    msg.includes("500") ||
+    msg.includes("502") ||
+    msg.includes("504") ||
+    msg.includes("network") ||
+    msg.includes("timeout") ||
+    msg.includes("ECONNRESET") ||
+    msg.includes("high demand") ||
+    msg.includes("overloaded")
+  );
+}
+
+async function generateWithRetry(
+  fn: () => Promise<any>,
+  maxRetries = 2,
+  delayMs = 1000
+): Promise<any> {
+  let lastError: any;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (err: any) {
+      lastError = err;
+      if (attempt < maxRetries && isRetryable(err)) {
+        console.warn(`[Saral /api/translate] Retrying (attempt ${attempt + 1}/${maxRetries}):`, err.message);
+        await new Promise((r) => setTimeout(r, delayMs * (attempt + 1)));
+      } else {
+        break;
+      }
+    }
+  }
+  throw lastError;
+}
+
 export async function POST(request: Request) {
+  let targetLanguage: "hindi" | "telugu" = "hindi";
   try {
-    const body = await request.json();
-    const { result, targetLanguage } = body as {
-      result: SimplifyResult;
-      targetLanguage: "hindi" | "telugu";
-    };
+    let body;
+    try {
+      body = await request.json();
+      targetLanguage = body.targetLanguage;
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
+    const { result } = body as { result: SimplifyResult };
 
     if (!result || !targetLanguage) {
-      return NextResponse.json(
-        { error: "Missing result or targetLanguage." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Missing result or targetLanguage." }, { status: 400 });
     }
 
     if (!["hindi", "telugu"].includes(targetLanguage)) {
-      return NextResponse.json(
-        { error: "Unsupported language. Use 'hindi' or 'telugu'." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Unsupported language. Use 'hindi' or 'telugu'." }, { status: 400 });
     }
 
     const langLabel = targetLanguage === "hindi" ? "Hindi" : "Telugu";
 
-    const apiKey = process.env.ANTHROPIC_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
 
-    // ── No API key → mock translated response ──────────────────────────────
-    if (!apiKey) {
-      await new Promise((r) => setTimeout(r, 1500));
+    // ─── Mock response (Demo Mode) ────────────────────────────────────────────────
+    const mockHindi: SimplifyResult = {
+      summary: "[डेमो मोड] यह एक सिम्युलेटेड प्रतिक्रिया है क्योंकि जेमिनी एपीआई कुंजी गायब है या अमान्य है।",
+      eligibility: "[डेमो मोड] आप डमी मानदंडों के आधार पर पात्र प्रतीत होते हैं।",
+      documentsNeeded: ["[डेमो] पहचान का प्रमाण", "[डेमो] पते का प्रमाण"],
+      nextSteps: [{ title: "[डेमो] वास्तविक एपीआई में अपग्रेड करें", detail: "वास्तविक दस्तावेज़ विश्लेषण देखने के लिए, आपको एक वैध जेमिनी एपीआई कुंजी जोड़नी होगी।" }],
+      redFlags: ["[डेमो] चेतावनी: यह आपके दस्तावेज़ का वास्तविक डेटा नहीं है।"]
+    };
 
-      // Return a clearly mock-translated version for UI testing
-      const mockHindi: SimplifyResult = {
-        summary:
-          "यह एक सरकारी अधिसूचना है जिसमें कहा गया है कि आपको अपने पते का प्रमाण और एक आय प्रमाण पत्र जमा करना होगा। यदि आप 30 दिनों के भीतर ये दस्तावेज़ जमा नहीं करते, तो आपका आवेदन स्वतः अस्वीकृत हो जाएगा।",
-        eligibility:
-          "आपके पास एक वैध अधिवास प्रमाण पत्र होना चाहिए, और आपका आय प्रमाण पत्र पिछले 12 महीनों के भीतर जारी किया गया होना चाहिए।",
-        documentsNeeded: [
-          "अधिवास प्रमाण पत्र (पते का प्रमाण)",
-          "आय प्रमाण पत्र (12 महीने से अधिक पुराना नहीं)",
-          "सत्यापित शपथ पत्र",
-        ],
-        nextSteps: [
-          {
-            title: "अपने दस्तावेज़ इकट्ठा करें",
-            detail: "सुनिश्चित करें कि आपके पास मूल अधिवास प्रमाण पत्र और हालिया आय प्रमाण पत्र है।",
-          },
-          {
-            title: "शपथ पत्र को सत्यापित कराएं",
-            detail: "आवश्यक शपथ पत्र को सत्यापित कराने के लिए स्थानीय नोटरी के पास जाएं। जल्द से जल्द यह करें।",
-          },
-          {
-            title: "समय सीमा तक जमा करें!",
-            detail: "स्वतः अस्वीकृति से बचने के लिए अधिसूचना जारी होने की तिथि से 30 दिनों के भीतर सभी दस्तावेज़ जमा करें।",
-          },
-        ],
-      };
+    const mockTelugu: SimplifyResult = {
+      summary: "[డెమో మోడ్] జెమిని API కీ లేనందున లేదా చెల్లని కారణంగా ఇది అనుకరించబడిన ప్రతిస్పందన.",
+      eligibility: "[డెమో మోడ్] డమ్మీ ప్రమాణాల ఆధారంగా మీరు అర్హులుగా కనిపిస్తున్నారు.",
+      documentsNeeded: ["[డెమో] గుర్తింపు రుజువు", "[డెమో] చిరునామా రుజువు"],
+      nextSteps: [{ title: "[డెమో] నిజమైన API కి అప్‌గ్రేడ్ చేయండి", detail: "నిజమైన పత్ర విశ్లేషణను చూడటానికి, మీరు చెల్లుబాటు అయ్యే జెమిని API కీని జోడించాలి." }],
+      redFlags: ["[డెమో] హెచ్చరిక: ఇది మీ పత్రం నుండి నిజమైన డేటా కాదు."]
+    };
 
-      const mockTelugu: SimplifyResult = {
-        summary:
-          "ఈ ప్రభుత్వ నోటీసు మీరు మీ చిరునామా రుజువు మరియు ఆదాయ ధృవీకరణ పత్రాన్ని సమర్పించాలని పేర్కొంటుంది. మీరు 30 రోజులలోపు ఈ పత్రాలు సమర్పించకపోతే, మీ దరఖాస్తు స్వయంచాలకంగా తిరస్కరించబడుతుంది.",
-        eligibility:
-          "మీకు చెల్లుబాటు అయ్యే నివాస ధృవీకరణ పత్రం ఉండాలి మరియు మీ ఆదాయ ధృవీకరణ పత్రం గత 12 నెలల్లో జారీ చేయబడి ఉండాలి.",
-        documentsNeeded: [
-          "నివాస ధృవీకరణ పత్రం (చిరునామా రుజువు)",
-          "ఆదాయ ధృవీకరణ పత్రం (12 నెలల కంటే పాతది కాదు)",
-          "ధృవీకరించిన అఫిడవిట్",
-        ],
-        nextSteps: [
-          {
-            title: "మీ పత్రాలను సేకరించండి",
-            detail: "మీకు మూల నివాస ధృవీకరణ పత్రం మరియు తాజా ఆదాయ ధృవీకరణ పత్రం ఉందని నిర్ధారించుకోండి.",
-          },
-          {
-            title: "అఫిడవిట్‌ను ధృవీకరించండి",
-            detail: "అవసరమైన అఫిడవిట్‌ను ధృవీకరించడానికి స్థానిక నోటరీని సందర్శించండి. వీలైనంత త్వరగా చేయండి.",
-          },
-          {
-            title: "గడువుకు లోపల సమర్పించండి!",
-            detail: "స్వయంచాలక తిరస్కరణను నివారించడానికి నోటీసు జారీ తేదీ నుండి 30 రోజులలోపు అన్ని పత్రాలు సమర్పించండి.",
-          },
-        ],
-      };
-
+    // ── Demo Mode (only when intentionally enabled via env var) ──────────────
+    if (DEMO_MODE) {
+      console.log("[Saral /api/translate] DEMO_MODE is enabled — returning predefined response.");
+      await new Promise((r) => setTimeout(r, 800));
       return NextResponse.json(targetLanguage === "hindi" ? mockHindi : mockTelugu);
     }
 
-    // ── Real Anthropic translation ─────────────────────────────────────────
-    const systemPrompt = `You are a professional government-document translator. Translate all text values in the provided JSON into ${langLabel}. 
-
-Rules:
-- Return ONLY valid JSON, in EXACTLY the same structure as the input. No markdown, no code fences, no explanation.
-- Translate every string value: summary, eligibility, all strings in the documentsNeeded array, and the title and detail of every object in the nextSteps array.
-- Do NOT translate JSON keys — only string values.
-- Preserve the meaning accurately. Use formal, clear language appropriate for government documents.
-- documentsNeeded items should be translated as short noun phrases (e.g. "Aadhaar Card" → "आधार कार्ड").`;
-
-    const userMessage = `Translate this JSON to ${langLabel}:\n\n${JSON.stringify(result, null, 2)}`;
-
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 2048,
-        system: systemPrompt,
-        messages: [{ role: "user", content: userMessage }],
-      }),
-    });
-
-    if (!response.ok) {
-      const errBody = await response.text();
-      console.error("Anthropic translation error:", response.status, errBody);
+    // ── Check API key ─────────────────────────────────────────────────────────
+    if (!apiKey) {
       return NextResponse.json(
-        { error: "Translation failed. Please try again." },
-        { status: 502 }
+        { error: "Server configuration error: Gemini API key is missing." },
+        { status: 500 }
       );
     }
 
-    const aiRes = await response.json();
-    const rawText =
-      aiRes.content?.[0]?.type === "text" ? aiRes.content[0].text : "";
+    // ── Real Gemini translation ─────────────────────────────────────────
+    const systemPrompt = `You are a professional government document translator.
+
+Your job is NOT to translate word-for-word.
+
+Your job is to rewrite the content so it sounds as if it was originally written by a native speaker of the target language (${langLabel}).
+
+Requirements:
+- Preserve every piece of information.
+- Preserve dates, names, amounts, and eligibility rules exactly.
+- Never invent information.
+- Never omit information.
+- Use natural grammar.
+- Use culturally appropriate expressions.
+- Use language suitable for citizens with basic education.
+- If a literal translation sounds unnatural, rewrite it naturally.
+- Return ONLY valid JSON, in EXACTLY the same structure as the input. No markdown, no code fences, no explanation.
+- Translate every string value: summary, eligibility, all strings in the documentsNeeded array, the title and detail of every object in the nextSteps array, and all strings in the redFlags array.
+- Do NOT translate JSON keys — only string values.
+- documentsNeeded items should be translated as short noun phrases.
+
+Language-specific instructions:
+- If translating to Hindi: Write natural Indian Hindi similar to official government citizen service portals. Avoid literal English sentence structures.
+- If translating to Telugu: Write natural Telugu spoken in Andhra Pradesh and Telangana. Avoid literal translations. Use expressions commonly found in Telugu government service portals.`;
+
+    const userMessage = `Translate this JSON to ${langLabel}:\n\n${JSON.stringify(result, null, 2)}`;
+
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-2.5-flash-lite",
+      systemInstruction: systemPrompt,
+      generationConfig: {
+        responseMimeType: "application/json"
+      }
+    });
+
+    const response = await generateWithRetry(() => model.generateContent(userMessage));
+    const rawText = response.response.text();
 
     if (!rawText) {
-      return NextResponse.json(
-        { error: "Received an empty response from the translator." },
-        { status: 502 }
-      );
+      return NextResponse.json({ error: "Received an empty response from the translator." }, { status: 502 });
     }
 
     // Strip markdown fences if present
@@ -146,10 +154,7 @@ Rules:
       parsed = JSON.parse(cleaned);
     } catch {
       console.error("Failed to parse translated JSON:", cleaned);
-      return NextResponse.json(
-        { error: "Translation returned an unexpected format. Please try again." },
-        { status: 502 }
-      );
+      return NextResponse.json({ error: "Translation returned an unexpected format. Please try again." }, { status: 502 });
     }
 
     // Validate shape
@@ -159,19 +164,16 @@ Rules:
       !Array.isArray(parsed.documentsNeeded) ||
       !Array.isArray(parsed.nextSteps)
     ) {
-      return NextResponse.json(
-        { error: "Translation returned an incomplete response. Please try again." },
-        { status: 502 }
-      );
+      return NextResponse.json({ error: "Translation returned an incomplete response. Please try again." }, { status: 502 });
     }
 
     console.log(`[Saral /api/translate] translated to ${langLabel}`);
     return NextResponse.json(parsed);
-  } catch (error) {
-    console.error("Unexpected error in /api/translate:", error);
+  } catch (error: any) {
+    console.error("[Saral /api/translate] Final error after retries:", error?.message);
     return NextResponse.json(
-      { error: "Something went wrong. Please try again." },
-      { status: 500 }
+      { error: "The AI service is temporarily unavailable. Please try again." },
+      { status: 502 }
     );
   }
 }

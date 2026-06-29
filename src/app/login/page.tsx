@@ -29,7 +29,11 @@ export default function LoginPage() {
           password,
         });
         if (signUpError) {
-          setError(signUpError.message || "Failed to create account.");
+          if (signUpError.message === "Failed to fetch") {
+            setError("Connection failed. Please verify NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your .env.local file.");
+          } else {
+            setError(signUpError.message || "Failed to create account.");
+          }
         } else {
           setSuccess("Account created successfully! You can now sign in.");
           setIsSignUp(false);
@@ -40,14 +44,22 @@ export default function LoginPage() {
           password,
         });
         if (signInError) {
-          setError("Incorrect email or password.");
+          if (signInError.message === "Failed to fetch") {
+            setError("Connection failed. Please verify NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your .env.local file.");
+          } else {
+            setError(signInError.message || "Failed to sign in. Please check your credentials.");
+          }
         } else {
           router.push("/dashboard");
           router.refresh(); // Ensure layout updates
         }
       }
-    } catch {
-      setError("An unexpected error occurred. Please try again.");
+    } catch (err: any) {
+      if (err?.message === "Failed to fetch") {
+        setError("Connection failed. Please verify NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your .env.local file.");
+      } else {
+        setError(err?.message || "An unexpected error occurred. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -61,7 +73,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[#f7f9f8] flex flex-col items-center justify-center p-5">
       <div className="w-full max-w-[420px]">
-        <div className="bg-white rounded-[24px] p-8 sm:p-10 shadow-[0_1px_4px_rgba(31,42,36,0.07),0_1px_2px_rgba(31,42,36,0.05)] text-center relative overflow-hidden">
+        <div className="bg-white rounded-[20px] p-8 sm:p-10 shadow-[0_1px_3px_rgba(31,42,36,0.05)] text-center relative overflow-hidden">
           
           <div className="flex justify-center mb-6">
             <div className="w-12 h-12 rounded-full bg-[#e8f2ec] flex items-center justify-center">

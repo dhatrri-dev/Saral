@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import type { MatchedScheme } from "@root/types/index";
+import { supabase } from "@root/lib/supabase";
+import { Save, Check, Loader2 } from "lucide-react";
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 const INDIAN_STATES = [
@@ -15,10 +17,12 @@ const INDIAN_STATES = [
 ];
 
 const INCOME_BANDS = [
-  { value: "under_1l",  label: "Under ₹1L" },
-  { value: "1l_2_5l",  label: "₹1L – ₹2.5L" },
-  { value: "2_5l_5l",  label: "₹2.5L – ₹5L" },
-  { value: "above_5l", label: "Above ₹5L" },
+  { value: "under_1l",    label: "Below ₹1 lakh" },
+  { value: "1l_2l",       label: "₹1–2 lakh" },
+  { value: "2l_2_5l",     label: "₹2–2.5 lakh" },
+  { value: "2_5l_5l",     label: "₹2.5–5 lakh" },
+  { value: "5l_8l",       label: "₹5–8 lakh" },
+  { value: "above_8l",    label: "Above ₹8 lakh" },
 ];
 
 const OCCUPATIONS = [
@@ -30,13 +34,43 @@ const OCCUPATIONS = [
   { value: "other",      label: "Other" },
 ];
 
+const GENDERS = [
+  { value: "male",   label: "Male" },
+  { value: "female", label: "Female" },
+  { value: "other",  label: "Other" },
+];
+
+const CATEGORIES = [
+  { value: "general", label: "General" },
+  { value: "obc",     label: "OBC" },
+  { value: "sc",      label: "SC" },
+  { value: "st",      label: "ST" },
+  { value: "ews",     label: "EWS" },
+];
+
+const EDUCATION_LEVELS = [
+  { value: "school",        label: "School (10th / 12th)" },
+  { value: "diploma",       label: "Diploma / ITI" },
+  { value: "undergraduate", label: "Undergraduate (UG)" },
+  { value: "postgraduate",  label: "Postgraduate (PG)" },
+];
+
+const COURSES = [
+  { value: "engineering", label: "Engineering / Technology" },
+  { value: "medicine",    label: "Medicine / Healthcare" },
+  { value: "arts",        label: "Arts / Humanities" },
+  { value: "commerce",    label: "Commerce / Management" },
+  { value: "science",     label: "Science" },
+  { value: "other",       label: "Other" },
+];
+
 const CATEGORY_LABELS: Record<string, string> = {
-  student:       "Student",
-  farmer:        "Farmer",
-  senior_citizen:"Senior Citizen",
-  women:         "Women",
-  healthcare:    "Healthcare",
-  general:       "General",
+  student:        "Student",
+  farmer:         "Farmer",
+  senior_citizen: "Senior Citizen",
+  women:          "Women",
+  healthcare:     "Healthcare",
+  general:        "General",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -48,21 +82,40 @@ const CATEGORY_COLORS: Record<string, string> = {
   general:        "bg-[#f1f3f5] text-[#495057]",
 };
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+const ChevronIcon = () => (
+  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  </div>
+);
+
 // ─── Component ─────────────────────────────────────────────────────────────────
 export default function MatcherPage() {
-  const [state, setState] = useState("");
-  const [age, setAge] = useState("");
+  const [state, setState]           = useState("");
+  const [age, setAge]               = useState("");
+  const [gender, setGender]         = useState("");
+  const [category, setCategory]     = useState("");
   const [occupation, setOccupation] = useState("");
   const [incomeBand, setIncomeBand] = useState("");
+  // Student-specific fields
+  const [educationLevel, setEducationLevel] = useState("");
+  const [course, setCourse]                 = useState("");
 
-  const [matches, setMatches] = useState<MatchedScheme[] | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [matches, setMatches]       = useState<MatchedScheme[] | null>(null);
+  const [loading, setLoading]       = useState(false);
+  const [error, setError]           = useState("");
   const [hasSearched, setHasSearched] = useState(false);
+
+  // Save states
+  const [savingProfile, setSavingProfile]       = useState(false);
+  const [profileSaved, setProfileSaved]         = useState(false);
+  const [profileSaveError, setProfileSaveError] = useState<string | null>(null);
 
   const handleFind = async () => {
     if (!age || !occupation || !incomeBand) {
-      setError("Please fill in Age, Occupation, and Annual income to continue.");
+      setError("Please fill in Age, Occupation, and Annual Family Income to continue.");
       return;
     }
     const parsedAge = parseInt(age, 10);
@@ -73,15 +126,19 @@ export default function MatcherPage() {
     setError("");
     setLoading(true);
     setHasSearched(false);
+    setProfileSaved(false);
+    setProfileSaveError(null);
 
-    // Slight delay for perceived processing — makes it feel real
     await new Promise((r) => setTimeout(r, 500));
 
     try {
       const res = await fetch("/api/match", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ age: parsedAge, incomeBand, occupation, state }),
+        body: JSON.stringify({
+          age: parsedAge, incomeBand, occupation, state,
+          gender, category, educationLevel, course
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -96,6 +153,36 @@ export default function MatcherPage() {
       setMatches(null);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSaveProfile = async () => {
+    if (!matches) return;
+    setSavingProfile(true);
+    setProfileSaveError(null);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        setProfileSaveError("You must be logged in to save.");
+        setSavingProfile(false);
+        return;
+      }
+
+      const profile = { state, age, gender, category, occupation, incomeBand, educationLevel, course };
+      const matched_scheme_ids = matches.map((m) => m.id);
+
+      const { error } = await supabase.from('eligibility_matches').insert({
+        user_id: session.user.id,
+        profile: profile,
+        matched_scheme_ids: matched_scheme_ids,
+      });
+
+      if (error) throw error;
+      setProfileSaved(true);
+    } catch (e: any) {
+      setProfileSaveError(e.message || "Failed to save profile.");
+    } finally {
+      setSavingProfile(false);
     }
   };
 
@@ -118,7 +205,7 @@ export default function MatcherPage() {
         </div>
 
         {/* ── Form Card ── */}
-        <div className="bg-white rounded-[24px] p-7 sm:p-9 shadow-[0_1px_4px_rgba(31,42,36,0.07),0_1px_2px_rgba(31,42,36,0.05)] mb-8">
+        <div className="bg-white rounded-[20px] p-7 sm:p-9 shadow-[0_1px_3px_rgba(31,42,36,0.05)] mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-7">
 
             {/* State */}
@@ -136,11 +223,7 @@ export default function MatcherPage() {
                     <option key={s} value={s}>{s}</option>
                   ))}
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
+                <ChevronIcon />
               </div>
             </div>
 
@@ -159,6 +242,44 @@ export default function MatcherPage() {
               />
             </div>
 
+            {/* Gender */}
+            <div>
+              <label htmlFor="gender-input" className={labelBase}>Gender</label>
+              <div className="relative">
+                <select
+                  id="gender-input"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className={`${inputBase} pr-10 cursor-pointer`}
+                >
+                  <option value="">Select gender</option>
+                  {GENDERS.map((g) => (
+                    <option key={g.value} value={g.value}>{g.label}</option>
+                  ))}
+                </select>
+                <ChevronIcon />
+              </div>
+            </div>
+
+            {/* Category */}
+            <div>
+              <label htmlFor="category-input" className={labelBase}>Category</label>
+              <div className="relative">
+                <select
+                  id="category-input"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className={`${inputBase} pr-10 cursor-pointer`}
+                >
+                  <option value="">Select category</option>
+                  {CATEGORIES.map((c) => (
+                    <option key={c.value} value={c.value}>{c.label}</option>
+                  ))}
+                </select>
+                <ChevronIcon />
+              </div>
+            </div>
+
             {/* Occupation */}
             <div>
               <label htmlFor="occupation-input" className={labelBase}>Occupation</label>
@@ -166,7 +287,7 @@ export default function MatcherPage() {
                 <select
                   id="occupation-input"
                   value={occupation}
-                  onChange={(e) => { setOccupation(e.target.value); setError(""); }}
+                  onChange={(e) => { setOccupation(e.target.value); setError(""); setEducationLevel(""); setCourse(""); }}
                   className={`${inputBase} pr-10 cursor-pointer`}
                 >
                   <option value="">Select occupation</option>
@@ -174,17 +295,13 @@ export default function MatcherPage() {
                     <option key={o.value} value={o.value}>{o.label}</option>
                   ))}
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
+                <ChevronIcon />
               </div>
             </div>
 
-            {/* Annual Income */}
+            {/* Annual Family Income */}
             <div>
-              <label htmlFor="income-input" className={labelBase}>Annual income</label>
+              <label htmlFor="income-input" className={labelBase}>Annual Family Income</label>
               <div className="relative">
                 <select
                   id="income-input"
@@ -197,13 +314,50 @@ export default function MatcherPage() {
                     <option key={b.value} value={b.value}>{b.label}</option>
                   ))}
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
+                <ChevronIcon />
               </div>
             </div>
+
+            {/* Student-specific: Education Level + Course */}
+            {occupation === "student" && (
+              <>
+                <div>
+                  <label htmlFor="education-input" className={labelBase}>Education Level</label>
+                  <div className="relative">
+                    <select
+                      id="education-input"
+                      value={educationLevel}
+                      onChange={(e) => setEducationLevel(e.target.value)}
+                      className={`${inputBase} pr-10 cursor-pointer`}
+                    >
+                      <option value="">Select level</option>
+                      {EDUCATION_LEVELS.map((e) => (
+                        <option key={e.value} value={e.value}>{e.label}</option>
+                      ))}
+                    </select>
+                    <ChevronIcon />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="course-input" className={labelBase}>Course / Stream</label>
+                  <div className="relative">
+                    <select
+                      id="course-input"
+                      value={course}
+                      onChange={(e) => setCourse(e.target.value)}
+                      className={`${inputBase} pr-10 cursor-pointer`}
+                    >
+                      <option value="">Select course</option>
+                      {COURSES.map((c) => (
+                        <option key={c.value} value={c.value}>{c.label}</option>
+                      ))}
+                    </select>
+                    <ChevronIcon />
+                  </div>
+                </div>
+              </>
+            )}
 
           </div>
 
@@ -245,11 +399,42 @@ export default function MatcherPage() {
         {hasSearched && matches !== null && (
           <div className="animate-in fade-in slide-in-from-bottom-3 duration-500">
 
-            {/* Count header */}
-            <div className="text-[12px] font-bold tracking-[2px] uppercase text-gray-500 mb-5">
-              {matches.length === 0
-                ? "No schemes matched"
-                : `${matches.length} scheme${matches.length === 1 ? "" : "s"} matched`}
+            {/* Count header and Save Button */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-4">
+              <div className="text-[12px] font-bold tracking-[2px] uppercase text-gray-500">
+                {matches.length === 0
+                  ? "No schemes matched"
+                  : `${matches.length} scheme${matches.length === 1 ? "" : "s"} matched`}
+              </div>
+
+              {matches.length > 0 && (
+                <div className="flex flex-col items-end">
+                  <button
+                    type="button"
+                    onClick={handleSaveProfile}
+                    disabled={savingProfile || profileSaved}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-semibold transition-colors shadow-sm ${
+                      profileSaved
+                        ? "bg-[#e8f5e9] text-[#2b5a3f] border border-[#c5deca]"
+                        : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
+                    }`}
+                  >
+                    {savingProfile ? (
+                      <Loader2 size={15} className="animate-spin text-gray-400" />
+                    ) : profileSaved ? (
+                      <Check size={15} className="text-[#2b5a3f]" />
+                    ) : (
+                      <Save size={15} className="text-gray-500" />
+                    )}
+                    {profileSaved ? "Saved to Dashboard" : "Save Profile & Matches"}
+                  </button>
+                  {profileSaveError && (
+                    <div className="text-[11px] text-[#d64c4c] mt-1 font-medium">
+                      {profileSaveError}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Zero results */}
@@ -269,7 +454,7 @@ export default function MatcherPage() {
               {matches.map((scheme) => (
                 <div
                   key={scheme.id}
-                  className="bg-white rounded-[20px] p-6 sm:p-7 shadow-[0_1px_3px_rgba(31,42,36,0.05),0_1px_2px_rgba(31,42,36,0.04)] border border-gray-100 transition-shadow hover:shadow-md"
+                  className="bg-white rounded-[20px] p-6 sm:p-7 shadow-[0_1px_3px_rgba(31,42,36,0.05)] border border-gray-100 transition-shadow hover:shadow-md"
                 >
                   {/* Top row: name + category badge */}
                   <div className="flex items-start justify-between gap-4 mb-2">

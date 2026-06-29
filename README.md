@@ -1,36 +1,281 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Saral — Simplifying India's Bureaucracy with AI
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+**Saral** is an AI-powered civic technology platform that makes Indian government scheme documents, policy notices, and eligibility criteria accessible to every citizen — regardless of literacy, language, or technical background.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+[![Next.js](https://img.shields.io/badge/Next.js-16.2-black?logo=next.js)](https://nextjs.org/)
+[![Gemini AI](https://img.shields.io/badge/Gemini-2.5--flash--lite-blue?logo=google)](https://ai.google.dev/)
+[![Supabase](https://img.shields.io/badge/Supabase-Auth%20%2B%20DB-green?logo=supabase)](https://supabase.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-4.0-38bdf8?logo=tailwind-css)](https://tailwindcss.com/)
+
+</div>
+
+---
+
+## 🌟 The Problem
+
+Every year, millions of Indian citizens miss out on government benefits they are legally entitled to — simply because the notices and scheme guidelines are written in impenetrable bureaucratic language.
+
+Phrases like:
+> *"Provisional disbursement pursuant to clause 4(b), subject to domicile certification not exceeding twelve months' validity..."*
+
+...are completely inaccessible to most people, especially those in rural areas, first-generation students, and citizens with limited formal education.
+
+**Saral fixes this.**
+
+---
+
+## ✨ What Saral Does
+
+Saral takes any government document — paste it, speak it, upload a PDF or photo — and breaks it down into five plain-language components using Gemini AI:
+
+| Component | What it tells you |
+|-----------|------------------|
+| 📄 **Summary** | What the document is actually about in 3–4 simple sentences |
+| ✅ **Eligibility** | Whether you qualify and exactly why |
+| 📋 **Documents Needed** | A clean checklist of every proof/certificate required |
+| 🗺️ **Next Steps** | Actionable, chronological steps with deadline warnings |
+| 🚩 **Red Flags** | Hidden fees, unfair clauses, or suspicious conditions |
+
+---
+
+## 🚀 Features
+
+### 🤖 AI Document Simplifier
+- **Paste** any government notice or scheme text
+- **Upload** PDFs (including scanned documents) — processed natively by Gemini's multimodal API
+- **Upload** photos of physical letters or documents
+- **Voice Dictation** — speak your document using native browser speech recognition
+
+### 🌐 Multilingual Support
+- Full translation to **Hindi** and **Telugu** with one click
+- **Native accent text-to-speech** — reads the simplified content aloud in `en-IN`, `hi-IN`, or `te-IN`
+- Translations are cached client-side to avoid redundant API calls
+
+### 💬 AI Chatbot
+- Gemini-powered **floating chat assistant** available on every page
+- Answers questions about eligibility, required documents, or specific schemes
+- Maintains **full conversation context** across follow-up questions
+- Gives structured, personalized recommendations with headings and bullet points
+
+### 🎯 Eligibility Matcher (Rules Engine)
+- A strict **demographic rules engine** matching user profiles to real government schemes
+- Filters by: Age, Gender, Caste/Category (SC/ST/OBC/EWS/General), Annual Family Income, State, Occupation, Education Level, and Course/Stream
+- **Income bands** match real government-defined slabs (Below ₹1L, ₹1–2L, ₹2–2.5L, ₹2.5–5L, ₹5–8L, Above ₹8L)
+- **Dynamic form** — selecting "Student" reveals education level and stream fields
+- **Stream-locked filtering** — Science-only schemes (like INSPIRE) disappear if Engineering is selected
+- **"Potentially Eligible"** status for schemes requiring additional criteria not in the form (e.g., PMAY-U)
+- Removes awareness/non-individual schemes (e.g., Beti Bachao Beti Padhao) from results
+
+### 🗂️ Scheme Explorer
+- Browse **80+ real Indian government schemes** (Central + State-specific)
+- Filter by category: Student, Farmer, Women, Senior Citizen, Healthcare, General
+- Real-time search by scheme name or description
+- Expand cards to view eligibility criteria and required documents
+- **Bookmark/Save** schemes directly to your authenticated dashboard
+
+### 🔐 Authentication & Personal Dashboard
+- **Supabase Auth** — secure sign up and sign in
+- **Navbar** instantly synchronizes with auth state — live session awareness across page refreshes
+- **Profile Dropdown Menu** — access Dashboard and Sign Out from any page
+- **Personal Dashboard** stores:
+  - Simplified documents (with full AI breakdown preserved)
+  - Saved/bookmarked schemes
+  - Saved eligibility match profiles (with formatted income ranges and actual matched scheme names)
+- All data scoped by Row Level Security (RLS) — users only see their own data
+
+### 🛡️ Reliability
+- **Retry logic** — all Gemini API calls automatically retry up to 2 times on 429/503/5xx errors
+- **PDF fallback** — native Gemini multimodal processing handles scanned PDFs that local parsers cannot
+- **Demo Mode** — available only via `DEMO_MODE=true` env variable, never triggered by API failure
+
+---
+
+## 🖥️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router) |
+| AI Engine | Google Gemini 2.5 Flash Lite |
+| Database & Auth | Supabase (PostgreSQL + RLS) |
+| Styling | Tailwind CSS v4 |
+| Language | TypeScript |
+| Icons | Lucide React |
+
+---
+
+## 📁 Project Structure
+
+```
+saral/
+├── src/
+│   ├── app/
+│   │   ├── page.tsx              # Homepage — Paste / Upload / Voice input
+│   │   ├── result/               # Simplified document results page
+│   │   ├── matcher/              # Eligibility Matcher form
+│   │   ├── explorer/             # Scheme Explorer browser
+│   │   ├── dashboard/            # Authenticated user dashboard
+│   │   ├── login/                # Sign in / Sign up page
+│   │   ├── Navbar.tsx            # Global navbar with auth sync
+│   │   └── api/
+│   │       ├── simplify/         # Document simplification API (Gemini)
+│   │       ├── translate/        # Translation API (Gemini)
+│   │       ├── match/            # Eligibility matching rules engine
+│   │       └── chat/             # AI chatbot API (Gemini)
+│   └── components/
+│       └── Chatbot.tsx           # Floating AI chat widget
+├── data/
+│   ├── schemes.json              # 80+ government schemes with full eligibility metadata
+│   └── exampleDocs.json          # Pre-loaded example government notices
+├── lib/
+│   └── supabase.ts               # Supabase client
+└── types/
+    └── index.ts                  # TypeScript interfaces
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Clone the repository
+```bash
+git clone https://github.com/dhatrri-dev/Saral.git
+cd Saral
+npm install
+```
 
-## Learn More
+### 2. Set up environment variables
+Create a `.env.local` file in the project root:
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Get your keys:**
+- Gemini API Key → [Google AI Studio](https://aistudio.google.com/)
+- Supabase → [supabase.com](https://supabase.com/) — create a free project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Set up the Supabase database
+Run the following SQL in your Supabase SQL Editor:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sql
+-- Saved schemes (from Scheme Explorer)
+CREATE TABLE saved_schemes (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) NOT NULL,
+  scheme_id TEXT NOT NULL,
+  scheme_name TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 
-## Deploy on Vercel
+-- Eligibility match profiles
+CREATE TABLE eligibility_matches (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) NOT NULL,
+  profile JSONB NOT NULL,
+  matched_scheme_ids TEXT[] NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-- Saved simplified documents
+CREATE TABLE saved_documents (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) NOT NULL,
+  summary TEXT,
+  eligibility TEXT,
+  documents_needed TEXT[],
+  next_steps JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+-- Enable Row Level Security
+ALTER TABLE saved_schemes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE eligibility_matches ENABLE ROW LEVEL SECURITY;
+ALTER TABLE saved_documents ENABLE ROW LEVEL SECURITY;
+
+-- RLS Policies
+CREATE POLICY "Users can view own schemes" ON saved_schemes FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own schemes" ON saved_schemes FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can view own matches" ON eligibility_matches FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own matches" ON eligibility_matches FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can view own documents" ON saved_documents FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own documents" ON saved_documents FOR INSERT WITH CHECK (auth.uid() = user_id);
+```
+
+### 4. Run the development server
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🌍 Government Schemes Covered
+
+The `data/schemes.json` file contains **80+ verified Indian government schemes**, including:
+
+**Central Schemes:**
+PM-KISAN, Ayushman Bharat, PM Jan Dhan Yojana, PMAY-G, PMAY-U, NSP Merit Scholarship, INSPIRE, AICTE Pragati, PM YASASVI, Sukanya Samriddhi, PMMVY, Ujjwala Yojana, MGNREGA, MUDRA, PM Kaushal Vikas, and many more.
+
+**State Schemes:**
+Rythu Bandhu (Telangana), Amma Vodi (AP), KCR Kit (Telangana), Kalyana Lakshmi (Telangana), Majhi Kanya Bhagyashree (Maharashtra), Bhagyalakshmi (Karnataka), LIFE Mission (Kerala), CM's Health Insurance (Tamil Nadu), and more.
+
+Each scheme includes:
+- `eligibility.minAge` / `maxAge`
+- `eligibility.maxIncome` (in INR)
+- `eligibility.occupation`
+- `eligibility.states`
+- `eligibility.gender`
+- `eligibility.categories` (SC/ST/OBC/EWS/General)
+- `eligibility.educationLevel` (for student schemes)
+- `eligibility.course` (for stream-specific schemes)
+- `eligibility.specialConditions` (pregnancy, disability, etc.)
+- `documentsNeeded`
+
+---
+
+## 📸 Screenshots
+
+> *Document Simplifier — paste, upload, or speak your document*
+
+> *Multilingual Result Cards — summary, eligibility, steps, and red flags*
+
+> *Eligibility Matcher — strict rules engine with 80+ schemes*
+
+> *Scheme Explorer — filter, search, and bookmark schemes*
+
+> *User Dashboard — saved documents, schemes, and match profiles*
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! If you'd like to add more government schemes, improve translations, or enhance the matching logic:
+
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/add-more-schemes`
+3. Commit your changes: `git commit -m 'feat: add 10 new state schemes for Punjab'`
+4. Push to the branch: `git push origin feature/add-more-schemes`
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+## 👨‍💻 Built By
+
+**Dhatrri** — Built for the citizens of India 🇮🇳
+
+---
+
+<div align="center">
+<sub>If Saral helped you, please ⭐ the repository!</sub>
+</div>

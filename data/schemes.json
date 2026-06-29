@@ -1,254 +1,1285 @@
 [
   {
     "id": "pm-kisan",
-    "name": "PM Kisan Samman Nidhi",
+    "name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
     "category": "farmer",
-    "description": "Provides ₹6,000 per year in three equal instalments directly to small and marginal farmers. No application fee, transferred directly to bank account.",
+    "description": "Provides income support of ₹6,000 per year to all landholding farmer families.",
     "eligibility": {
       "minAge": 18,
       "maxAge": null,
       "maxIncome": null,
-      "occupation": ["farmer"],
-      "states": ["all"]
+      "occupation": [
+        "farmer"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "landholding_farmer"
+      ]
     },
-    "documentsNeeded": ["Aadhaar Card", "Bank Passbook", "Land ownership documents"]
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Land Ownership Proof",
+      "Bank Account Details"
+    ]
   },
   {
-    "id": "nsp-merit-scholarship",
-    "name": "National Scholarship Portal — Merit Scholarship",
-    "category": "student",
-    "description": "Financial support of up to ₹12,000 per year for students from low-income families pursuing higher education at any UGC-recognised institution.",
-    "eligibility": {
-      "minAge": 16,
-      "maxAge": 30,
-      "maxIncome": 250000,
-      "occupation": ["student"],
-      "states": ["all"]
-    },
-    "documentsNeeded": ["Aadhaar Card", "Income Certificate", "Marksheets (last two years)", "College Admission Letter", "Bank Passbook"]
-  },
-  {
-    "id": "nsp-sc-scholarship",
-    "name": "National Scholarship Portal — SC Post-Matric Scholarship",
-    "category": "student",
-    "description": "Scholarship for Scheduled Caste students pursuing post-matriculation education. Covers tuition fees and provides a maintenance allowance.",
-    "eligibility": {
-      "minAge": 16,
-      "maxAge": 35,
-      "maxIncome": 250000,
-      "occupation": ["student"],
-      "states": ["all"]
-    },
-    "documentsNeeded": ["Aadhaar Card", "Caste Certificate", "Income Certificate", "Marksheets", "Bank Passbook"]
-  },
-  {
-    "id": "ignoaps",
-    "name": "Indira Gandhi National Old Age Pension Scheme (IGNOAPS)",
-    "category": "senior_citizen",
-    "description": "Monthly pension of ₹200–₹500 for senior citizens living below the poverty line. No contribution required — it is a government-funded scheme.",
-    "eligibility": {
-      "minAge": 60,
-      "maxAge": null,
-      "maxIncome": 100000,
-      "occupation": ["any"],
-      "states": ["all"]
-    },
-    "documentsNeeded": ["Aadhaar Card", "Age Proof (Birth Certificate / School Certificate)", "BPL Ration Card", "Bank Passbook"]
-  },
-  {
-    "id": "pmvvy",
-    "name": "Pradhan Mantri Vaya Vandana Yojana (PMVVY)",
-    "category": "senior_citizen",
-    "description": "A pension scheme for senior citizens guaranteeing 7.4% annual return on a lump-sum investment, with monthly pension payouts for 10 years.",
-    "eligibility": {
-      "minAge": 60,
-      "maxAge": null,
-      "maxIncome": null,
-      "occupation": ["any"],
-      "states": ["all"]
-    },
-    "documentsNeeded": ["Aadhaar Card", "PAN Card", "Bank Passbook", "Age Proof"]
-  },
-  {
-    "id": "pmjdy",
-    "name": "Pradhan Mantri Jan Dhan Yojana (PMJDY)",
-    "category": "general",
-    "description": "Zero-balance savings account with a free RuPay debit card, accident insurance of ₹2 lakh, and life cover of ₹30,000 for any Indian citizen.",
-    "eligibility": {
-      "minAge": 10,
-      "maxAge": null,
-      "maxIncome": null,
-      "occupation": ["any"],
-      "states": ["all"]
-    },
-    "documentsNeeded": ["Aadhaar Card", "Passport-size photograph"]
-  },
-  {
-    "id": "pmay-gramin",
-    "name": "Pradhan Mantri Awas Yojana — Gramin (PMAY-G)",
-    "category": "general",
-    "description": "Financial assistance of ₹1.2–₹1.3 lakh for rural households to build or upgrade a pucca house. Funds are transferred directly to the bank account.",
+    "id": "pmfby",
+    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "category": "farmer",
+    "description": "Provides insurance coverage and financial support to farmers in the event of failure of any of the notified crops as a result of natural calamities, pests & diseases.",
     "eligibility": {
       "minAge": 18,
       "maxAge": null,
-      "maxIncome": 200000,
-      "occupation": ["any"],
-      "states": ["all"]
+      "maxIncome": null,
+      "occupation": [
+        "farmer"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
     },
-    "documentsNeeded": ["Aadhaar Card", "BPL Ration Card", "Bank Passbook", "Land document or NOC"]
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Land Records",
+      "Sowing Certificate",
+      "Bank Account Details"
+    ]
+  },
+  {
+    "id": "kcc",
+    "name": "Kisan Credit Card (KCC)",
+    "category": "farmer",
+    "description": "Provides adequate and timely credit support from the banking system under a single window with flexible and simplified procedure to the farmers.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": 75,
+      "maxIncome": null,
+      "occupation": [
+        "farmer"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "landholding_farmer"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "PAN Card",
+      "Land Records",
+      "Passport Size Photo"
+    ]
+  },
+  {
+    "id": "soil-health-card",
+    "name": "Soil Health Card Scheme",
+    "category": "farmer",
+    "description": "Provides farmers with soil nutrient status of their holding and advises them on the dosage of fertilizers.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": [
+        "farmer"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Land Details"
+    ]
+  },
+  {
+    "id": "e-nam",
+    "name": "National Agriculture Market (e-NAM)",
+    "category": "farmer",
+    "description": "Pan-India electronic trading portal which networks the existing APMC mandis to create a unified national market for agricultural commodities.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": [
+        "farmer"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Bank Account Details",
+      "FSSAI License (if applicable)"
+    ]
+  },
+  {
+    "id": "pmksy",
+    "name": "Pradhan Mantri Krishi Sinchayee Yojana (PMKSY)",
+    "category": "farmer",
+    "description": "Aims to enhance physical access of water on farm and expand cultivable area under assured irrigation, improve on-farm water use efficiency, introduce sustainable water conservation practices, etc.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": [
+        "farmer"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Land Records",
+      "Bank Passbook"
+    ]
+  },
+  {
+    "id": "rkvy",
+    "name": "Rashtriya Krishi Vikas Yojana (RKVY)",
+    "category": "farmer",
+    "description": "Incentivizes States to increase public investment in Agriculture and allied sectors.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": [
+        "farmer"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Project Proposal",
+      "Land Documents"
+    ]
+  },
+  {
+    "id": "pksy",
+    "name": "Paramparagat Krishi Vikas Yojana (PKVY)",
+    "category": "farmer",
+    "description": "Promotes organic farming among farmers.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": [
+        "farmer"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Land Records",
+      "Bank Account Details"
+    ]
+  },
+  {
+    "id": "nsp-merit",
+    "name": "National Scholarship Portal (NSP) Merit-cum-Means",
+    "category": "student",
+    "description": "Scholarship for minority students pursuing professional and technical courses.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": 250000,
+      "occupation": [
+        "student"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": [
+        "minority"
+      ],
+      "specialConditions": [],
+      "educationLevel": [
+        "undergraduate",
+        "postgraduate"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Income Certificate",
+      "Community Certificate",
+      "Previous Marksheet",
+      "Fee Receipt"
+    ]
+  },
+  {
+    "id": "sc-post-matric",
+    "name": "Post Matric Scholarship for SC Students",
+    "category": "student",
+    "description": "Provides financial assistance to SC students studying at post matriculation or post-secondary stage.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": 250000,
+      "occupation": [
+        "student"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": [
+        "sc"
+      ],
+      "specialConditions": [],
+      "educationLevel": [
+        "diploma",
+        "undergraduate",
+        "postgraduate"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Caste Certificate",
+      "Income Certificate",
+      "Previous Marksheet"
+    ]
+  },
+  {
+    "id": "obc-pre-matric",
+    "name": "Pre-Matric Scholarship for OBC Students",
+    "category": "student",
+    "description": "Financial assistance to OBC students studying in classes I to X.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": 250000,
+      "occupation": [
+        "student"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": [
+        "obc"
+      ],
+      "specialConditions": [],
+      "educationLevel": [
+        "school"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Caste Certificate",
+      "Income Certificate",
+      "Previous Marksheet"
+    ]
+  },
+  {
+    "id": "aicte-pragati",
+    "name": "AICTE Pragati Scholarship for Girls",
+    "category": "student",
+    "description": "Scholarship for girl students taking admission in AICTE approved Technical institution for diploma/degree.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": 800000,
+      "occupation": [
+        "student"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": [],
+      "educationLevel": [
+        "diploma",
+        "undergraduate"
+      ],
+      "course": [
+        "engineering"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Income Certificate",
+      "Admission Letter",
+      "Previous Marksheet"
+    ]
+  },
+  {
+    "id": "aicte-saksham",
+    "name": "AICTE Saksham Scholarship for Specially Abled",
+    "category": "student",
+    "description": "Scholarship for specially-abled students taking admission in AICTE approved Technical institution.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": 800000,
+      "occupation": [
+        "student"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "disabled"
+      ],
+      "educationLevel": [
+        "diploma",
+        "undergraduate"
+      ],
+      "course": [
+        "engineering"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Disability Certificate",
+      "Income Certificate",
+      "Admission Letter"
+    ]
+  },
+  {
+    "id": "inspire",
+    "name": "INSPIRE Scholarship for Higher Education (SHE)",
+    "category": "student",
+    "description": "Scholarship for students pursuing basic and natural science courses at BSc/Integrated MSc level.",
+    "eligibility": {
+      "minAge": 17,
+      "maxAge": 22,
+      "maxIncome": null,
+      "occupation": [
+        "student"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [],
+      "educationLevel": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "course": [
+        "science"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "12th Marksheet",
+      "Endorsement Certificate from College"
+    ]
+  },
+  {
+    "id": "pm-yasasvi",
+    "name": "PM YASASVI Scholarship",
+    "category": "student",
+    "description": "Scholarships for OBC, EBC and DNT students studying in classes 9 to 12 in recognized schools.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": 250000,
+      "occupation": [
+        "student"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": [
+        "obc",
+        "ebc",
+        "dnt"
+      ],
+      "specialConditions": [],
+      "educationLevel": [
+        "school"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Caste Certificate",
+      "Income Certificate",
+      "Previous Marksheet"
+    ]
+  },
+  {
+    "id": "ishan-uday",
+    "name": "Ishan Uday Special Scholarship for NER",
+    "category": "student",
+    "description": "Scholarship for students of North Eastern Region for general degree courses, technical and professional courses.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": 450000,
+      "occupation": [
+        "student"
+      ],
+      "states": [
+        "Arunachal Pradesh",
+        "Assam",
+        "Manipur",
+        "Meghalaya",
+        "Mizoram",
+        "Nagaland",
+        "Sikkim",
+        "Tripura"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [],
+      "educationLevel": [
+        "undergraduate"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Domicile Certificate",
+      "Income Certificate",
+      "Joining Report"
+    ]
   },
   {
     "id": "sukanya-samriddhi",
-    "name": "Sukanya Samriddhi Yojana",
+    "name": "Sukanya Samriddhi Yojana (SSY)",
     "category": "women",
-    "description": "A high-interest (8.2% p.a.) savings scheme for the girl child. Parents deposit yearly and the account matures when the girl turns 21, ideal for education or marriage expenses.",
+    "description": "A small deposit scheme for the girl child to build a fund for her education and marriage.",
     "eligibility": {
       "minAge": 0,
       "maxAge": 10,
       "maxIncome": null,
-      "occupation": ["any"],
-      "states": ["all"]
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": []
     },
-    "documentsNeeded": ["Girl child's Birth Certificate", "Parent's Aadhaar Card", "PAN Card", "Bank Passbook"]
+    "documentsNeeded": [
+      "Birth Certificate of Girl Child",
+      "Aadhaar Card of Parent/Guardian",
+      "Address Proof"
+    ]
+  },
+  {
+    "id": "pmmvy",
+    "name": "Pradhan Mantri Matru Vandana Yojana (PMMVY)",
+    "category": "women",
+    "description": "Maternity benefit program providing cash incentive of ₹5,000 to pregnant women and lactating mothers for first living child.",
+    "eligibility": {
+      "minAge": 19,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": [
+        "pregnant"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "MCP Card",
+      "Bank Passbook"
+    ]
+  },
+  {
+    "id": "ujjwala",
+    "name": "Pradhan Mantri Ujjwala Yojana (PMUY)",
+    "category": "women",
+    "description": "Provides deposit-free LPG connections to women from below poverty line (BPL) households.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": [
+        "bpl"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Ration Card",
+      "Bank Passbook",
+      "Passport Size Photo"
+    ]
   },
   {
     "id": "beti-bachao",
     "name": "Beti Bachao Beti Padhao",
     "category": "women",
-    "description": "A scheme promoting welfare, education, and survival of the girl child. Provides financial incentives and awareness support to families in identified districts.",
-    "eligibility": {
-      "minAge": null,
-      "maxAge": 18,
-      "maxIncome": 300000,
-      "occupation": ["student", "any"],
-      "states": ["all"]
-    },
-    "documentsNeeded": ["Birth Certificate", "Aadhaar Card", "Income Certificate"]
-  },
-  {
-    "id": "ayushman-bharat",
-    "name": "Ayushman Bharat — Pradhan Mantri Jan Arogya Yojana",
-    "category": "healthcare",
-    "description": "Health insurance cover of up to ₹5 lakh per family per year for hospitalisation at empanelled public and private hospitals across India.",
+    "description": "Aims to address the declining Child Sex Ratio (CSR) and related issues of women empowerment.",
     "eligibility": {
       "minAge": null,
       "maxAge": null,
-      "maxIncome": 200000,
-      "occupation": ["any"],
-      "states": ["all"]
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": [
+        "awareness"
+      ]
     },
-    "documentsNeeded": ["Aadhaar Card", "Ration Card", "Income Certificate (if applicable)"]
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Birth Certificate (for specific benefits)"
+    ]
   },
   {
-    "id": "pm-suraksha-bima",
+    "id": "one-stop-centre",
+    "name": "One Stop Centre (Sakhi)",
+    "category": "women",
+    "description": "Provides integrated support and assistance to women affected by violence, both in private and public spaces.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": [
+        "violence_victim"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card (optional in emergencies)"
+    ]
+  },
+  {
+    "id": "nari-shakti",
+    "name": "Nari Shakti Puraskar",
+    "category": "women",
+    "description": "National award in recognition of exceptional work for women empowerment.",
+    "eligibility": {
+      "minAge": 25,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": [
+        "award_nomination"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Nomination Form",
+      "Proof of Work/Achievements"
+    ]
+  },
+  {
+    "id": "working-women-hostel",
+    "name": "Working Women Hostel Scheme",
+    "category": "women",
+    "description": "Promotes availability of safe and conveniently located accommodation for working women.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": 50000,
+      "occupation": [
+        "employed"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Employment Proof",
+      "Salary Slip"
+    ]
+  },
+  {
+    "id": "ignoaps",
+    "name": "Indira Gandhi National Old Age Pension Scheme (IGNOAPS)",
+    "category": "senior_citizen",
+    "description": "Provides monthly pension to BPL individuals aged 60 years or above.",
+    "eligibility": {
+      "minAge": 60,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "bpl"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "BPL Certificate",
+      "Age Proof",
+      "Bank Passbook"
+    ]
+  },
+  {
+    "id": "pmvvy",
+    "name": "Pradhan Mantri Vaya Vandana Yojana (PMVVY)",
+    "category": "senior_citizen",
+    "description": "Pension scheme exclusively for senior citizens aged 60 years and above providing an assured return of 8% p.a.",
+    "eligibility": {
+      "minAge": 60,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "PAN Card",
+      "Bank Account Details"
+    ]
+  },
+  {
+    "id": "scss",
+    "name": "Senior Citizen Savings Scheme (SCSS)",
+    "category": "senior_citizen",
+    "description": "Government-backed savings instrument offering security and regular income to senior citizens.",
+    "eligibility": {
+      "minAge": 60,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "PAN Card",
+      "Age Proof",
+      "Photographs"
+    ]
+  },
+  {
+    "id": "rashtriya-vayoshri",
+    "name": "Rashtriya Vayoshri Yojana (RVY)",
+    "category": "senior_citizen",
+    "description": "Provides physical aids and assisted-living devices for senior citizens belonging to BPL category.",
+    "eligibility": {
+      "minAge": 60,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "bpl"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "BPL Card",
+      "Medical Certificate for Impairment"
+    ]
+  },
+  {
+    "id": "annapurna",
+    "name": "Annapurna Scheme",
+    "category": "senior_citizen",
+    "description": "Provides 10 kgs of food grains per month free of cost to indigent senior citizens who are not receiving IGNOAPS.",
+    "eligibility": {
+      "minAge": 65,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "bpl"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Age Proof",
+      "Income Proof",
+      "Non-receipt of IGNOAPS Certificate"
+    ]
+  },
+  {
+    "id": "ayushman-bharat",
+    "name": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+    "category": "healthcare",
+    "description": "Provides health cover of ₹5 lakhs per family per year for secondary and tertiary care hospitalization.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "bpl"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Ration Card",
+      "PMJAY Card"
+    ]
+  },
+  {
+    "id": "jsy",
+    "name": "Janani Suraksha Yojana (JSY)",
+    "category": "healthcare",
+    "description": "Safe motherhood intervention under National Health Mission to reduce maternal and neonatal mortality by promoting institutional delivery.",
+    "eligibility": {
+      "minAge": 19,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": [
+        "pregnant"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "MCP Card",
+      "BPL Card"
+    ]
+  },
+  {
+    "id": "jssk",
+    "name": "Janani Shishu Suraksha Karyakaram (JSSK)",
+    "category": "healthcare",
+    "description": "Provides completely free and cashless services to pregnant women including normal deliveries and caesarean operations and sick new born.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": [
+        "pregnant"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "MCP Card"
+    ]
+  },
+  {
+    "id": "nikshay-poshan",
+    "name": "Nikshay Poshan Yojana (NPY)",
+    "category": "healthcare",
+    "description": "Provides ₹500 per month for nutritional support to all notified TB patients during the course of their treatment.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "tb_patient"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Bank Passbook",
+      "Medical Records of TB Diagnosis"
+    ]
+  },
+  {
+    "id": "mission-indradhanush",
+    "name": "Mission Indradhanush",
+    "category": "healthcare",
+    "description": "Aims to immunize all children under the age of 2 years and pregnant women against vaccine preventable diseases.",
+    "eligibility": {
+      "minAge": 0,
+      "maxAge": 2,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "child_under_2"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card of Parent",
+      "Immunization Card"
+    ]
+  },
+  {
+    "id": "pmjdy",
+    "name": "Pradhan Mantri Jan Dhan Yojana (PMJDY)",
+    "category": "general",
+    "description": "National Mission for Financial Inclusion to ensure access to financial services like banking, savings, remittance, credit, insurance, pension.",
+    "eligibility": {
+      "minAge": 10,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Passport Size Photo"
+    ]
+  },
+  {
+    "id": "pmay-g",
+    "name": "Pradhan Mantri Awas Yojana - Gramin (PMAY-G)",
+    "category": "general",
+    "description": "Aims to provide a pucca house with basic amenities to all rural houseless households and those living in kutcha and dilapidated houses.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "bpl"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "SECC 2011 Registration",
+      "Bank Account Details",
+      "Swachh Bharat Mission Number"
+    ]
+  },
+  {
+    "id": "pmay-u",
+    "name": "Pradhan Mantri Awas Yojana - Urban (PMAY-U)",
+    "category": "general",
+    "description": "Aims to provide housing for all in urban areas.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": 1800000,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "potential_info_needed"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Income Proof",
+      "Property Documents"
+    ]
+  },
+  {
+    "id": "pmsby",
     "name": "Pradhan Mantri Suraksha Bima Yojana (PMSBY)",
     "category": "general",
-    "description": "Accident insurance cover of ₹2 lakh for accidental death or total disability at just ₹20 per year premium, available to all bank account holders.",
+    "description": "Accident insurance scheme offering accidental death and disability cover for death or disability on account of an accident.",
     "eligibility": {
       "minAge": 18,
       "maxAge": 70,
       "maxIncome": null,
-      "occupation": ["any"],
-      "states": ["all"]
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
     },
-    "documentsNeeded": ["Aadhaar Card", "Bank Passbook", "Mobile number linked to bank account"]
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Bank Account Passbook"
+    ]
   },
   {
-    "id": "tnpsc-scheme",
-    "name": "Tamil Nadu State Scholarship for Higher Education",
-    "category": "student",
-    "description": "A Tamil Nadu state government grant supporting tuition costs for undergraduate students from economically weaker sections in state colleges.",
-    "eligibility": {
-      "minAge": 17,
-      "maxAge": 28,
-      "maxIncome": 200000,
-      "occupation": ["student"],
-      "states": ["Tamil Nadu"]
-    },
-    "documentsNeeded": ["Aadhaar Card", "Income Certificate", "10th/12th Marksheets", "Community Certificate", "College ID"]
-  },
-  {
-    "id": "kisan-credit-card",
-    "name": "Kisan Credit Card (KCC)",
-    "category": "farmer",
-    "description": "Provides farmers with timely and adequate credit for agricultural needs at low interest rates (around 4% p.a.), covering crop loans, post-harvest expenses, and more.",
-    "eligibility": {
-      "minAge": 18,
-      "maxAge": 75,
-      "maxIncome": null,
-      "occupation": ["farmer"],
-      "states": ["all"]
-    },
-    "documentsNeeded": ["Aadhaar Card", "PAN Card", "Land records", "Bank Passbook", "Passport-size photograph"]
-  },
-  {
-    "id": "pm-jeevan-jyoti",
+    "id": "pmjjby",
     "name": "Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY)",
     "category": "general",
-    "description": "Life insurance cover of ₹2 lakh in case of death for any reason, at a premium of just ₹436 per year. Available to all savings bank account holders aged 18–50.",
+    "description": "Life insurance scheme offering coverage for death due to any reason.",
     "eligibility": {
       "minAge": 18,
       "maxAge": 50,
       "maxIncome": null,
-      "occupation": ["any"],
-      "states": ["all"]
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
     },
-    "documentsNeeded": ["Aadhaar Card", "Bank Passbook", "Mobile number linked to bank account"]
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Bank Account Passbook"
+    ]
   },
   {
-    "id": "nrlm-self-help",
-    "name": "Deendayal Antyodaya Yojana — National Rural Livelihoods Mission (DAY-NRLM)",
-    "category": "women",
-    "description": "Supports rural women by forming Self-Help Groups (SHGs), providing micro-credit, skill training, and linkage to financial institutions for income generation.",
-    "eligibility": {
-      "minAge": 18,
-      "maxAge": null,
-      "maxIncome": 150000,
-      "occupation": ["unemployed", "any"],
-      "states": ["all"]
-    },
-    "documentsNeeded": ["Aadhaar Card", "BPL Card (if applicable)", "Bank Passbook", "Residence Proof"]
-  },
-  {
-    "id": "pmegp",
-    "name": "PM Employment Generation Programme (PMEGP)",
+    "id": "apy",
+    "name": "Atal Pension Yojana (APY)",
     "category": "general",
-    "description": "Provides financial assistance (15–35% subsidy on project cost) to individuals setting up micro-enterprises, creating self-employment opportunities in rural and urban areas.",
+    "description": "Pension scheme focused on unorganized sector workers, guaranteeing a minimum pension of ₹1,000 to ₹5,000 per month.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": 40,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Bank Account Passbook"
+    ]
+  },
+  {
+    "id": "mudra",
+    "name": "Pradhan Mantri MUDRA Yojana (PMMY)",
+    "category": "general",
+    "description": "Provides loans up to ₹10 lakhs to non-corporate, non-farm small/micro enterprises.",
     "eligibility": {
       "minAge": 18,
       "maxAge": null,
       "maxIncome": null,
-      "occupation": ["unemployed", "any"],
-      "states": ["all"]
+      "occupation": [
+        "business"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
     },
-    "documentsNeeded": ["Aadhaar Card", "PAN Card", "Project Report", "8th Pass Certificate (minimum)", "Bank Passbook"]
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "PAN Card",
+      "Business Plan",
+      "Income Tax Returns (if applicable)"
+    ]
   },
   {
-    "id": "annapurna-scheme",
-    "name": "Annapurna Scheme (Senior Citizen Food Security)",
-    "category": "senior_citizen",
-    "description": "Provides 10 kg of free food grain per month to senior citizens who are not covered under the National Old Age Pension Scheme.",
+    "id": "mgnrega",
+    "name": "Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA)",
+    "category": "general",
+    "description": "Provides at least 100 days of guaranteed wage employment in a financial year to every rural household whose adult members volunteer to do unskilled manual work.",
     "eligibility": {
-      "minAge": 65,
+      "minAge": 18,
       "maxAge": null,
-      "maxIncome": 100000,
-      "occupation": ["any"],
-      "states": ["all"]
+      "maxIncome": null,
+      "occupation": [
+        "unskilled labor"
+      ],
+      "states": [
+        "all"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
     },
-    "documentsNeeded": ["Aadhaar Card", "Age Proof", "Income Certificate", "Proof of non-receipt of NOAPS pension"]
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Bank Account Details",
+      "Passport Size Photo"
+    ]
   },
   {
-    "id": "fasal-bima",
-    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "id": "rythu-bandhu",
+    "name": "Rythu Bandhu Scheme",
     "category": "farmer",
-    "description": "Crop insurance scheme that compensates farmers for financial losses due to natural calamities, pests, or diseases. Farmers pay only 1.5–5% of the sum insured as premium.",
+    "description": "Agriculture Investment Support Scheme in Telangana providing ₹5,000 per acre per season to farmers.",
     "eligibility": {
       "minAge": 18,
       "maxAge": null,
       "maxIncome": null,
-      "occupation": ["farmer"],
-      "states": ["all"]
+      "occupation": [
+        "farmer"
+      ],
+      "states": [
+        "Telangana"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
     },
-    "documentsNeeded": ["Aadhaar Card", "Land records / Khasra Khatauni", "Bank Passbook", "Sowing Certificate"]
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Pattadar Passbook",
+      "Bank Account Details"
+    ]
+  },
+  {
+    "id": "kalyana-lakshmi",
+    "name": "Kalyana Lakshmi Scheme",
+    "category": "women",
+    "description": "Provides financial assistance of ₹1,00,116 for the marriage of girls from SC, ST, BC and EBC families in Telangana.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": 200000,
+      "occupation": null,
+      "states": [
+        "Telangana"
+      ],
+      "gender": "female",
+      "categories": [
+        "sc",
+        "st",
+        "bc",
+        "ebc"
+      ],
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Income Certificate",
+      "Caste Certificate",
+      "Age Proof of Bride",
+      "Marriage Confirmation"
+    ]
+  },
+  {
+    "id": "kcr-kit",
+    "name": "KCR Kit Scheme",
+    "category": "women",
+    "description": "Provides financial assistance and a kit with 16 essential items for pregnant women in Telangana.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "Telangana"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": [
+        "pregnant"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Mother and Child Protection (MCP) Card"
+    ]
+  },
+  {
+    "id": "cm-health-insurance-tn",
+    "name": "Chief Minister's Comprehensive Health Insurance Scheme (CMCHIS)",
+    "category": "healthcare",
+    "description": "Provides quality healthcare to the eligible persons through empanelled Government and Private hospitals in Tamil Nadu.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": 120000,
+      "occupation": null,
+      "states": [
+        "Tamil Nadu"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Family Ration Card",
+      "Income Certificate"
+    ]
+  },
+  {
+    "id": "amma-vodi",
+    "name": "Jagananna Amma Vodi",
+    "category": "student",
+    "description": "Provides financial assistance of ₹15,000 per annum to poor mothers in Andhra Pradesh to educate their children from class I to XII.",
+    "eligibility": {
+      "minAge": null,
+      "maxAge": null,
+      "maxIncome": 120000,
+      "occupation": null,
+      "states": [
+        "Andhra Pradesh"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": [
+        "bpl"
+      ],
+      "educationLevel": [
+        "school"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "White Ration Card",
+      "School ID Card",
+      "Bank Passbook"
+    ]
+  },
+  {
+    "id": "bhagyalakshmi",
+    "name": "Bhagyalakshmi Scheme",
+    "category": "women",
+    "description": "Aims to promote the birth of girl children in below poverty line (BPL) families and to raise the status of the girl child in the family and society in Karnataka.",
+    "eligibility": {
+      "minAge": 0,
+      "maxAge": 1,
+      "maxIncome": null,
+      "occupation": null,
+      "states": [
+        "Karnataka"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": [
+        "bpl"
+      ]
+    },
+    "documentsNeeded": [
+      "Aadhaar Card of Parent",
+      "Birth Certificate of Girl Child",
+      "BPL Card"
+    ]
+  },
+  {
+    "id": "majhi-kanya",
+    "name": "Majhi Kanya Bhagyashree Scheme",
+    "category": "women",
+    "description": "Maharashtra government scheme providing financial benefits to families on the birth of a girl child to improve the sex ratio and promote girls education.",
+    "eligibility": {
+      "minAge": 0,
+      "maxAge": 1,
+      "maxIncome": 750000,
+      "occupation": null,
+      "states": [
+        "Maharashtra"
+      ],
+      "gender": "female",
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Birth Certificate",
+      "Income Certificate",
+      "Bank Passbook"
+    ]
+  },
+  {
+    "id": "life-mission",
+    "name": "LIFE Mission (Livelihood Inclusion and Financial Empowerment)",
+    "category": "general",
+    "description": "Provides comprehensive housing scheme for all the landless and homeless in the State of Kerala.",
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": null,
+      "maxIncome": 300000,
+      "occupation": null,
+      "states": [
+        "Kerala"
+      ],
+      "gender": null,
+      "categories": null,
+      "specialConditions": []
+    },
+    "documentsNeeded": [
+      "Aadhaar Card",
+      "Ration Card",
+      "Income Certificate",
+      "Landless/Homeless Certificate"
+    ]
   }
 ]

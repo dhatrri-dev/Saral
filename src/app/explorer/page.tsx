@@ -3,6 +3,8 @@
 import { useState, useMemo } from "react";
 import schemesData from "@root/data/schemes.json";
 import type { Scheme } from "@root/types/index";
+import { supabase } from "@root/lib/supabase";
+import { Bookmark, Check, Loader2 } from "lucide-react";
 
 const schemes = schemesData as Scheme[];
 
@@ -42,6 +44,36 @@ export default function ExplorerPage() {
   const [search, setSearch]           = useState("");
   const [activeCategory, setCategory] = useState<Category>("all");
   const [expandedId, setExpandedId]   = useState<string | null>(null);
+
+  // Save states
+  const [savingMap, setSavingMap] = useState<Record<string, boolean>>({});
+  const [savedMap, setSavedMap] = useState<Record<string, boolean>>({});
+
+  const handleSaveScheme = async (scheme: Scheme) => {
+    setSavingMap((prev) => ({ ...prev, [scheme.id]: true }));
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        alert("You must be logged in to save schemes.");
+        setSavingMap((prev) => ({ ...prev, [scheme.id]: false }));
+        return;
+      }
+
+      const { error } = await supabase.from('saved_schemes').insert({
+        user_id: session.user.id,
+        scheme_id: scheme.id,
+        scheme_name: scheme.name,
+      });
+
+      if (error) throw error;
+
+      setSavedMap((prev) => ({ ...prev, [scheme.id]: true }));
+    } catch (e: any) {
+      alert(e.message || "Failed to save scheme.");
+    } finally {
+      setSavingMap((prev) => ({ ...prev, [scheme.id]: false }));
+    }
+  };
 
   // ── Client-side filtering ─────────────────────────────────────────────────
   const filtered = useMemo(() => {
@@ -147,10 +179,32 @@ export default function ExplorerPage() {
               >
                 {/* Card top */}
                 <div className="p-6">
-                  {/* Category badge */}
-                  <span className={`inline-block text-[11px] font-semibold px-2.5 py-1 rounded-full mb-3 ${CATEGORY_COLORS[scheme.category] ?? "bg-gray-100 text-gray-600"}`}>
-                    {CATEGORY_LABELS[scheme.category] ?? scheme.category}
-                  </span>
+                  {/* Top Header: Category and Save */}
+                  <div className="flex items-center justify-between mb-3">
+                    <span className={`inline-block text-[11px] font-semibold px-2.5 py-1 rounded-full ${CATEGORY_COLORS[scheme.category] ?? "bg-gray-100 text-gray-600"}`}>
+                      {CATEGORY_LABELS[scheme.category] ?? scheme.category}
+                    </span>
+                    
+                    <button
+                      type="button"
+                      onClick={() => handleSaveScheme(scheme)}
+                      disabled={savingMap[scheme.id] || savedMap[scheme.id]}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium transition-colors ${
+                        savedMap[scheme.id] 
+                          ? "bg-[#e8f5e9] text-[#2b5a3f]" 
+                          : "bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      }`}
+                    >
+                      {savingMap[scheme.id] ? (
+                        <Loader2 size={13} className="animate-spin" />
+                      ) : savedMap[scheme.id] ? (
+                        <Check size={13} />
+                      ) : (
+                        <Bookmark size={13} />
+                      )}
+                      {savedMap[scheme.id] ? "Saved" : "Save"}
+                    </button>
+                  </div>
 
                   {/* Name */}
                   <h2 className="text-[16px] font-bold text-gray-900 leading-snug mb-2">

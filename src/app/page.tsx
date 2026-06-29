@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { GraduationCap, Home, Landmark, AlertCircle, Upload, X, FileText, Image } from "lucide-react";
+import { GraduationCap, Home, Landmark, AlertCircle, Upload, X, FileText, Image, Mic, MicOff } from "lucide-react";
 import exampleDocs from "@root/data/exampleDocs.json";
 import type { ExampleDocument } from "@root/types/index";
 
@@ -17,6 +17,54 @@ export default function HomePage() {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  // ─── Voice Input Setup ──────────────────────────────────────────────────
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        recognitionRef.current = new SpeechRecognition();
+        recognitionRef.current.continuous = true;
+        recognitionRef.current.interimResults = true;
+        
+        recognitionRef.current.onresult = (event: any) => {
+          let currentTranscript = "";
+          for (let i = 0; i < event.results.length; i++) {
+             currentTranscript += event.results[i][0].transcript;
+          }
+          setText(currentTranscript);
+          setErrorMsg("");
+        };
+
+        recognitionRef.current.onerror = (event: any) => {
+          console.error("Speech recognition error", event.error);
+          setIsListening(false);
+        };
+
+        recognitionRef.current.onend = () => {
+          setIsListening(false);
+        };
+      }
+    }
+  }, []);
+
+  const toggleListening = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    } else {
+      if (recognitionRef.current) {
+        recognitionRef.current.start();
+        setIsListening(true);
+        setErrorMsg("");
+      } else {
+        setErrorMsg("Voice input is not supported in this browser.");
+      }
+    }
+  };
 
   // ─── Convert File to Base64 ───────────────────────────────────────────────
   const fileToBase64 = (file: File): Promise<string> =>
@@ -185,7 +233,7 @@ export default function HomePage() {
             Paste your own document below, or upload a photo or PDF
           </div>
 
-          <div className="bg-white rounded-[24px] p-2.5 shadow-[0_1px_3px_rgba(31,42,36,0.05),0_1px_2px_rgba(31,42,36,0.04)] mb-2 relative">
+          <div className="bg-white rounded-[20px] p-2.5 shadow-[0_1px_3px_rgba(31,42,36,0.05)] mb-2 relative">
             {/* Tab Switcher */}
             <div className="flex items-center bg-[#f7f9f8] rounded-[20px] p-1.5 mb-3 border border-gray-50">
               <button 
@@ -214,16 +262,30 @@ export default function HomePage() {
 
             {/* ── Paste Tab ── */}
             {activeTab === "paste" && (
-              <textarea
-                id="document-input"
-                value={text}
-                onChange={(e) => {
-                  setText(e.target.value);
-                  if (errorMsg) setErrorMsg("");
-                }}
-                placeholder="Paste the text from any government notice, letter, or form..."
-                className="w-full h-[150px] p-5 text-[15px] sm:text-[16px] leading-relaxed text-gray-800 bg-transparent resize-none outline-none placeholder:text-gray-400"
-              ></textarea>
+              <div className="relative">
+                <textarea
+                  id="document-input"
+                  value={text}
+                  onChange={(e) => {
+                    setText(e.target.value);
+                    if (errorMsg) setErrorMsg("");
+                  }}
+                  placeholder="Paste or speak the text from any government notice, letter, or form..."
+                  className="w-full h-[150px] p-5 pb-12 text-[15px] sm:text-[16px] leading-relaxed text-gray-800 bg-transparent resize-none outline-none placeholder:text-gray-400"
+                ></textarea>
+                <button
+                  type="button"
+                  onClick={toggleListening}
+                  className={`absolute bottom-3 right-3 p-2.5 rounded-full flex items-center justify-center transition-all ${
+                    isListening
+                      ? "bg-[#fff8ee] text-[#b47116] animate-pulse shadow-sm"
+                      : "bg-[#f7f9f8] text-gray-400 hover:text-[#2b5a3f] hover:bg-[#e8f2ec]"
+                  }`}
+                  title={isListening ? "Stop listening" : "Start voice input"}
+                >
+                  {isListening ? <MicOff size={18} /> : <Mic size={18} />}
+                </button>
+              </div>
             )}
 
             {/* ── Upload Tab ── */}
@@ -341,13 +403,13 @@ export default function HomePage() {
 
                 return (
                   <button
-                    key={doc.id}
+                    key={doc.id || idx}
                     type="button"
                     onClick={() => handleExample(doc)}
-                    className={`p-5 rounded-[16px] text-left transition-all shadow-[0_1px_3px_rgba(31,42,36,0.05),0_1px_2px_rgba(31,42,36,0.04)] ${
-                      isSelected 
-                        ? "bg-[#2D6B45] text-white" 
-                        : "bg-white text-gray-800 hover:shadow-md"
+                    className={`p-5 rounded-[20px] text-left transition-all shadow-[0_1px_3px_rgba(31,42,36,0.05)] ${
+                      isSelected
+                        ? "bg-[#2b5a3f] text-white ring-2 ring-[#2b5a3f] ring-offset-2 scale-[1.02]"
+                        : "bg-white text-gray-700 hover:scale-[1.02] hover:shadow-md border border-gray-100"
                     }`}
                   >
                     <div className="mb-4">

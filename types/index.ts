@@ -6,6 +6,7 @@ export interface SimplifyResult {
     title: string;
     detail: string;
   }>;
+  redFlags?: string[];
 }
 
 export interface ExampleDocument {
@@ -26,6 +27,11 @@ export interface Scheme {
     maxIncome: number | null;
     occupation: string[] | null;
     states: string[];
+    gender: string | null;
+    categories: string[] | null;
+    specialConditions: string[];
+    educationLevel?: string[];
+    course?: string[];
   };
   documentsNeeded: string[];
 }
