@@ -240,17 +240,30 @@ Each scheme includes:
 
 ## 📸 Screenshots
 
-> *Document Simplifier — paste, upload, or speak your document*
-
-> *Multilingual Result Cards — summary, eligibility, steps, and red flags*
-
-> *Eligibility Matcher — strict rules engine with 80+ schemes*
-
-> *Scheme Explorer — filter, search, and bookmark schemes*
-
-> *User Dashboard — saved documents, schemes, and match profiles*
-
----
+<img width="1536" height="815" alt="Screenshot 2026-06-29 181556" src="https://github.com/user-attachments/assets/5504c52e-6e91-45c1-891b-44297cd2bced" />
+<img width="1536" height="809" alt="Screenshot 2026-06-29 181628" src="https://github.com/user-attachments/assets/21af3b81-2176-4739-8fad-00f0e51b19f0" />
+<img width="1536" height="813" alt="Screenshot 2026-06-29 181648" src="https://github.com/user-attachments/assets/f86a6fea-8508-4bdc-a7a3-f0280428ee52" />
+<img width="1532" height="812" alt="Screenshot 2026-06-29 182832" src="https://github.com/user-attachments/assets/9e80cb11-989f-43e8-bcad-764ceafd7514" />
+<img width="1536" height="811" alt="Screenshot 2026-06-29 182853" src="https://github.com/user-attachments/assets/75411d75-25c1-4c49-9dae-3e436db3468d" />
+<img width="1532" height="810" alt="Screenshot 2026-06-29 182912" src="https://github.com/user-attachments/assets/caf43802-3642-4dd3-8d15-d244d3285f66" />
+<img width="1536" height="810" alt="Screenshot 2026-06-29 182929" src="https://github.com/user-attachments/assets/6b2a49f7-1c70-476d-a610-04a0063de107" />
+<img width="1521" height="796" alt="Screenshot 2026-06-29 183007" src="https://github.com/user-attachments/assets/3c271b00-f396-4fd3-adb2-12e6c028dd75" />
+<img width="1532" height="809" alt="Screenshot 2026-06-29 183051" src="https://github.com/user-attachments/assets/1cec8307-8dc1-4d1b-9ea5-8cbcd2089296" />
+<img width="1534" height="808" alt="Screenshot 2026-06-29 183148" src="https://github.com/user-attachments/assets/b5feeccd-9fef-475c-bd96-da4a4f4f8f4b" />
+<img width="1536" height="807" alt="Screenshot 2026-06-29 183221" src="https://github.com/user-attachments/assets/e8bdbb22-001f-4c44-b7c9-bbbeae37eddf" />
+<img width="1535" height="811" alt="Screenshot 2026-06-29 183426" src="https://github.com/user-attachments/assets/2f69d6eb-6471-4db3-be8c-56b5debb9491" />
+<img width="1536" height="816" alt="Screenshot 2026-06-29 183444" src="https://github.com/user-attachments/assets/4bab7f45-d5e3-4fd1-9367-9dabf6c1e179" />
+<img width="1536" height="812" alt="Screenshot 2026-06-29 183501" src="https://github.com/user-attachments/assets/e78e3996-b32e-405f-a161-c16cb44e84c0" />
+<img width="1536" height="808" alt="Screenshot 2026-06-29 183525" src="https://github.com/user-attachments/assets/f50df13a-86b5-4275-aa33-3e031386606b" />
+<img width="1536" height="813" alt="Screenshot 2026-06-29 183556" src="https://github.com/user-attachments/assets/effcbb25-7ca2-424a-84f6-e0b8fcbdfed5" />
+<img width="1536" height="803" alt="Screenshot 2026-06-29 183623" src="https://github.com/user-attachments/assets/75552e61-066a-436e-ba11-78bafaf428c6" />
+<img width="1529" height="798" alt="Screenshot 2026-06-29 183646" src="https://github.com/user-attachments/assets/85ab2acb-454e-4280-9f83-0062321286a8" />
+<img width="1532" height="809" alt="Screenshot 2026-06-29 183707" src="https://github.com/user-attachments/assets/a9466b57-344d-47ad-998d-8fb8d35c845f" />
+<img width="1536" height="812" alt="Screenshot 2026-06-29 183737" src="https://github.com/user-attachments/assets/aadd5238-f94b-4913-b3ad-f6ade555e15d" />
+<img width="1536" height="813" alt="Screenshot 2026-06-29 183818" src="https://github.com/user-attachments/assets/420fe339-6f74-4531-9157-742967a5a0b1" />
+<img width="1494" height="805" alt="Screenshot 2026-06-29 183838" src="https://github.com/user-attachments/assets/420d2221-3e39-445b-8dc6-82479963b702" />
+<img width="1536" height="807" alt="Screenshot 2026-06-29 183902" src="https://github.com/user-attachments/assets/2839d1d9-56e0-447a-ad0f-28266df9e6dd" />
+<img width="1536" height="816" alt="Screenshot 2026-06-29 183921" src="https://github.com/user-attachments/assets/07028806-1d06-45de-b5d3-25a76bcdd35b" />
 
 ## 🤝 Contributing
 
